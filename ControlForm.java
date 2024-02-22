@@ -3,17 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+package com.mycompany.bouncingballproject;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ControlForm extends JFrame
 {
+    BallObserver ball_observer;
     
-    BallObserver ball_observer = null;
+    int win_height = 500;
+    int win_width = 450;
     
-    int win_height = 700;
-    int win_width = 700;
+    private JSlider speedSlider;
+    private JComboBox<String> colorComboBox;
+    private String[] colors = {"Red", "Black", "Blue", "Cyan"};
+    private JSlider sizeSlider;
+    
+    ButtonGroup shapeButtonGroup = new ButtonGroup();
+    private JRadioButton shape1;
+    private JRadioButton shape2;
+    private JRadioButton shape3;
+    
     
     public ControlForm()
     {
@@ -21,19 +35,116 @@ public class ControlForm extends JFrame
         this.setTitle("Control Form");
         this.setSize(win_width, win_height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(2,2));
+        this.setLayout(new GridLayout(5,1));
         
-        
-        
-        this.add(observer());
-        this.add(ball_features());
-        this.add(subject_observer());
-        this.add(unsub_shapes());
-        
+        this.add(shapeSelection());
+        this.add(speedSelection());
+        this.add(colorSelection());
+        this.add(sizeSelection());
+        this.add(addBallButton());
         
         this.setVisible(true);
         
     }
+    
+    //method to select shape
+    private JPanel shapeSelection()
+    {
+        JPanel shapeLabel = new JPanel(new GridLayout(3, 1));
+        
+        shape1 = new JRadioButton("Circle");
+        shapeButtonGroup.add(shape1);
+        shape2 = new JRadioButton("Triangle");
+        shapeButtonGroup.add(shape2);
+        shape3 = new JRadioButton("Square");
+        shapeButtonGroup.add(shape3);
+        
+        shapeLabel.add(shape1);
+        shapeLabel.add(shape2);
+        shapeLabel.add(shape3);
+       
+        shapeLabel = createLabeledPanel("Select Shape:", shapeLabel);
+        return shapeLabel;
+    }
+    
+    
+    //method to select speed with a slider
+    private JPanel speedSelection()
+    {
+        speedSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        speedSlider.setMajorTickSpacing(10);
+        speedSlider.setPaintTicks(true);
+        speedSlider.setPaintLabels(true);
+        JPanel speedLabel = new JPanel();
+        speedLabel = createLabeledPanel("Select Speed:", speedSlider);
+        return speedLabel;
+    }
+    
+    //method to select color
+    private JPanel colorSelection()
+    {
+        colorComboBox = new JComboBox<>(colors);
+        JPanel colorLabel = new JPanel();
+        colorLabel = createLabeledPanel("Select Color:", colorComboBox);
+        return colorLabel;
+    }
+    
+    //method to select size with a slider
+    private JPanel sizeSelection()
+    {
+        sizeSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        sizeSlider.setMajorTickSpacing(10);
+        sizeSlider.setPaintTicks(true);
+        sizeSlider.setPaintLabels(true);
+        JPanel sizeLabel = new JPanel();
+        sizeLabel = createLabeledPanel("Select Size:", sizeSlider);
+        return sizeLabel;
+    }
+    private JPanel addBallButton()
+    {
+        JButton addBall = new JButton("Add Ball");
+        addBall.setSize(20,20);
+        JPanel addBallLabel = new JPanel();
+        addBallLabel.add(addBall);
+        
+        //listener to "register ball selected"
+        addBall.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                String selectedShape = "";
+                if (shape1.isSelected()) {
+                    selectedShape = "Circle";
+                } else if (shape2.isSelected()) {
+                    selectedShape = "Triangle";
+                } else if (shape3.isSelected()) {
+                    selectedShape = "Square";
+                }
+                int selectedSpeed = speedSlider.getValue();
+                String selectedColor = (String) colorComboBox.getSelectedItem();
+                int selectedSize = sizeSlider.getValue();
+                
+                System.out.println("Shape: " + selectedShape);
+                System.out.println("Speed: " + selectedSpeed);
+                System.out.println("Color: " + selectedColor);
+                System.out.println("Size: " + selectedSize);
+            }
+        });
+        
+        return addBallLabel;
+    }
+    
+    // helper method to create a panel with comment on left and selection on the right
+    private JPanel createLabeledPanel(String labelText, JComponent component) {
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+        panel.add(new JLabel(labelText), BorderLayout.WEST);
+        panel.add(component, BorderLayout.CENTER);
+        return panel;
+    }
+   
+    
+    
     private JPanel observer(){
         
         JPanel observer = new JPanel();
@@ -52,81 +163,7 @@ public class ControlForm extends JFrame
         
         return subjects;
     }
-    private JPanel ball_features(){
-        JPanel ball_features = new JPanel(new BorderLayout());
-        JLabel ball_label = new JLabel();
-        ball_label.setText("Ball Features");
-        ball_features.add(ball_label,BorderLayout.NORTH);
-        
-        Box checkbox = Box.createVerticalBox();
-        JCheckBox change_size = new JCheckBox();
-        change_size.setText("Change Size");
-        JCheckBox change_speed = new JCheckBox();
-        change_speed.setText("Change speed");
-        JCheckBox change_direction = new JCheckBox();
-        change_direction.setText("Change direction");
-        JCheckBox change_color = new JCheckBox();
-        change_color.setText("Change Color");        
-        
-        checkbox.add(change_size);
-        checkbox.add(change_speed);
-        checkbox.add(change_direction);
-        checkbox.add(change_color);
-        
-        ButtonGroup shape_options = new ButtonGroup();
-        
-        Box shape_choice = Box.createVerticalBox();
-        JRadioButton circle = new JRadioButton();
-        circle.setText("Circle");
-        JRadioButton triangle = new JRadioButton();
-        triangle.setText("Triangle");
-        JRadioButton square = new JRadioButton();
-        square.setText("Square");
-        
-        shape_options.add(circle);
-        shape_options.add(triangle);
-        shape_options.add(square);
-        
-        shape_choice.add(circle);
-        shape_choice.add(triangle);
-        shape_choice.add(square);
-        
-        
-        ball_features.add(shape_choice,BorderLayout.CENTER);
-        ball_features.add(checkbox, BorderLayout.EAST);
-        
-        JButton create_shape = new JButton();
-        create_shape.setText("Create A Shape");
-        create_shape.setSize(20,20);
-        create_shape.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                
-                String shape = "";
-                if (triangle.isSelected()){
-                    shape = "Triangle";
-                }
-                if (square.isSelected()){
-                    shape = "Square";
-                }
-                if(circle.isSelected()){
-                    shape = "Circle";
-                }
-                if (ball_observer == null)
-                {    
-                    System.out.println(shape);
-                    ball_observer = new BallObserver(shape);
-                }
-            }
-        });
-        
-        ball_features.add(create_shape,BorderLayout.SOUTH);
-        
-        
-        
-        return ball_features;
-    }
-        
+    
     private JPanel unsub_shapes(){
         JPanel unsub_shapes = new JPanel();
         JLabel unsub_label = new JLabel();
