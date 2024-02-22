@@ -31,7 +31,6 @@ public class ControlForm extends JFrame
     
     public ControlForm()
     {
-        
         this.setTitle("Control Form");
         this.setSize(win_width, win_height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,7 +66,6 @@ public class ControlForm extends JFrame
         return shapeLabel;
     }
     
-    
     //method to select speed with a slider
     private JPanel speedSelection()
     {
@@ -100,6 +98,8 @@ public class ControlForm extends JFrame
         sizeLabel = createLabeledPanel("Select Size:", sizeSlider);
         return sizeLabel;
     }
+    
+    //method to add the "add ball" button
     private JPanel addBallButton()
     {
         JButton addBall = new JButton("Add Ball");
@@ -107,7 +107,7 @@ public class ControlForm extends JFrame
         JPanel addBallLabel = new JPanel();
         addBallLabel.add(addBall);
         
-        //listener to "register ball selected"
+        //listener to print the configuration of the ball selected
         addBall.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -141,36 +141,6 @@ public class ControlForm extends JFrame
         panel.add(new JLabel(labelText), BorderLayout.WEST);
         panel.add(component, BorderLayout.CENTER);
         return panel;
-    }
-   
-    
-    
-    private JPanel observer(){
-        
-        JPanel observer = new JPanel();
-        JLabel observer_label = new JLabel();
-        observer_label.setText("Observers");
-        observer.add(observer_label);
-        return observer;
-    }
-    
-    private JPanel subject_observer()
-    {
-        JPanel subjects = new JPanel();
-        JLabel subject_label = new JLabel();
-        subject_label.setText("Subjects of Observer");
-        subjects.add(subject_label);
-        
-        return subjects;
-    }
-    
-    private JPanel unsub_shapes(){
-        JPanel unsub_shapes = new JPanel();
-        JLabel unsub_label = new JLabel();
-        unsub_label.setText("Shapes");
-        unsub_shapes.add(unsub_label);
-            
-        return unsub_shapes;
     }
     
     public static void main(String[] args) {
