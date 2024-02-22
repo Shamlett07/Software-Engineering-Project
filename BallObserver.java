@@ -1,21 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- *
- * @author staci
- */
-public class BallObserver {
+import java.awt.GridLayout;
+import javax.swing.*;
+
+
+public class BallObserver extends JFrame
+{
     BouncyBall ball;
-    int observer_width;
-    int observer_height;
+    int observer_width = 700;
+    int observer_height = 700;
+    JPanel show_shape = new JPanel();
     
-    public BallObserver(){
+    public BallObserver(String shape){
+        
+        this.setTitle("Observer");
+        this.setSize(observer_width, observer_height);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ball = new BouncyBall(shape);
+        
+        this.add(ball);
+        
+        this.setVisible(true);
         
     }
-    
     
 }

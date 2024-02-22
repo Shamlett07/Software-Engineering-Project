@@ -5,10 +5,12 @@
  */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class ControlForm extends JFrame
 {
-    BallObserver ball_observer;
+    
+    BallObserver ball_observer = null;
     
     int win_height = 700;
     int win_width = 700;
@@ -71,17 +73,24 @@ public class ControlForm extends JFrame
         checkbox.add(change_direction);
         checkbox.add(change_color);
         
+        ButtonGroup shape_options = new ButtonGroup();
+        
         Box shape_choice = Box.createVerticalBox();
-        JRadioButton ball = new JRadioButton();
-        ball.setText("Ball");
+        JRadioButton circle = new JRadioButton();
+        circle.setText("Circle");
         JRadioButton triangle = new JRadioButton();
         triangle.setText("Triangle");
         JRadioButton square = new JRadioButton();
         square.setText("Square");
         
-        shape_choice.add(ball);
+        shape_options.add(circle);
+        shape_options.add(triangle);
+        shape_options.add(square);
+        
+        shape_choice.add(circle);
         shape_choice.add(triangle);
         shape_choice.add(square);
+        
         
         ball_features.add(shape_choice,BorderLayout.CENTER);
         ball_features.add(checkbox, BorderLayout.EAST);
@@ -89,13 +98,35 @@ public class ControlForm extends JFrame
         JButton create_shape = new JButton();
         create_shape.setText("Create A Shape");
         create_shape.setSize(20,20);
+        create_shape.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                
+                String shape = "";
+                if (triangle.isSelected()){
+                    shape = "Triangle";
+                }
+                if (square.isSelected()){
+                    shape = "Square";
+                }
+                if(circle.isSelected()){
+                    shape = "Circle";
+                }
+                if (ball_observer == null)
+                {    
+                    System.out.println(shape);
+                    ball_observer = new BallObserver(shape);
+                }
+            }
+        });
         
         ball_features.add(create_shape,BorderLayout.SOUTH);
         
         
+        
         return ball_features;
     }
-    
+        
     private JPanel unsub_shapes(){
         JPanel unsub_shapes = new JPanel();
         JLabel unsub_label = new JLabel();
