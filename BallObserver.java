@@ -1,25 +1,27 @@
 
-import java.awt.GridLayout;
 import javax.swing.*;
+import java.util.*;
 
 
 public class BallObserver extends JFrame
 {
-    BouncyBall ball;
+    BouncyBall ball = new BouncyBall();
     int observer_width = 700;
     int observer_height = 700;
-    JPanel show_shape = new JPanel();
     
-    public BallObserver(String shape){
+    public BallObserver(){
         
         this.setTitle("Observer");
         this.setSize(observer_width, observer_height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ball = new BouncyBall(shape);
-        
-        this.add(ball);
-        
         this.setVisible(true);
+           
+    }
+    public void addBall(String shape,String color)
+    {
+        ball.shape = shape;
+        ball.setColor(color);
+        this.add(ball);
         
     }
     

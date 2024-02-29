@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,7 @@ public class ControlForm extends JFrame
     
     private JSlider speedSlider;
     private JComboBox<String> colorComboBox;
-    private String[] colors = {"Red", "Black", "Blue", "Cyan"};
+    private String[] colors = {"Red", "Black", "Blue", "Green"};
     private JSlider sizeSlider;
     
     ButtonGroup shapeButtonGroup = new ButtonGroup();
@@ -115,19 +114,38 @@ public class ControlForm extends JFrame
                 String selectedShape = "";
                 if (shape1.isSelected()) {
                     selectedShape = "Circle";
-                } else if (shape2.isSelected()) {
+                    } 
+                    else if (shape2.isSelected()) {
                     selectedShape = "Triangle";
-                } else if (shape3.isSelected()) {
+                    }
+                    else if (shape3.isSelected()) {
                     selectedShape = "Square";
+                   }
+                if(selectedShape.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "There was No Shape Selected. Please Selected The Desired Shape");
                 }
-                int selectedSpeed = speedSlider.getValue();
-                String selectedColor = (String) colorComboBox.getSelectedItem();
-                int selectedSize = sizeSlider.getValue();
+                else
+                {
+                    int selectedSpeed = speedSlider.getValue();
+                    String selectedColor = (String) colorComboBox.getSelectedItem();
+                    int selectedSize = sizeSlider.getValue();
+
+                    System.out.println("Shape: " + selectedShape);
+                    System.out.println("Speed: " + selectedSpeed);
+                    System.out.println("Color: " + selectedColor);
+                    System.out.println("Size: " + selectedSize);
                 
-                System.out.println("Shape: " + selectedShape);
-                System.out.println("Speed: " + selectedSpeed);
-                System.out.println("Color: " + selectedColor);
-                System.out.println("Size: " + selectedSize);
+                    //if ball observer null
+                    // create the observer
+                    //else add ball
+                    if(ball_observer == null)
+                    {
+                        ball_observer = new BallObserver();
+                    }
+                   
+                        
+                    ball_observer.addBall(selectedShape, selectedColor);
+                }
             }
         });
         

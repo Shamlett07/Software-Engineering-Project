@@ -7,7 +7,8 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class BouncyBall extends JPanel{
+public class BouncyBall extends JPanel
+{
     String shape;
     int[] triangle_x_points = {105,60,150};
     int[] triangle_y_points = {100,200,200};
@@ -15,41 +16,52 @@ public class BouncyBall extends JPanel{
     int size;
     int speed;
     int direction;
-    Color[] color = {Color.RED,Color.BLACK,Color.BLUE,Color.CYAN};
-    
-    public BouncyBall(String shape)
-    {
-        this.shape = shape;
-        
-    }
+    Color color;
 
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
+
         drawShape(g);
+        repaint();
     }
     void drawShape(Graphics g){
-        switch (shape) {
+        g.setColor(color);
+        switch (shape) 
+        {
             case "Triangle":
-                g.setColor(Color.orange);
                 g.fillPolygon(triangle_x_points, triangle_y_points, num_of_points);
                 break;
             case "Square":
-                g.fillRect(100, 100, 100, 100);
+                g.fillRect(200, 200, 100, 100);
                 break;
             case "Circle":
-                g.setColor(Color.red);
                 g.fillOval(100, 100, 100, 100);
                 break;
         }
+       
         
     }
-    
     void setSize(int new_size){
         size = new_size;
     }
     void setSpeed(int new_speed){
         speed = new_speed;
     }
-
+    void setColor(String new_color){
+        switch (new_color){
+            case "Red":
+                color = Color.RED;
+                break;
+            case "Black":
+                color = Color.BLACK;
+                break;
+            case "Blue":
+                color = Color.BLUE;
+                break;
+            case "Green":
+                color = Color.GREEN;
+                break;
+        }
+    }
 }
