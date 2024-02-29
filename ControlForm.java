@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+package com.mycompany.bouncingballproject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,11 @@ public class ControlForm extends JFrame
     private JRadioButton shape2;
     private JRadioButton shape3;
     
+    int selectedSpeed;
+    String selectedColor;
+    int selectedSize;
+    
+    private boolean ballOpen = false;
     
     public ControlForm()
     {
@@ -114,13 +120,11 @@ public class ControlForm extends JFrame
                 String selectedShape = "";
                 if (shape1.isSelected()) {
                     selectedShape = "Circle";
-                    } 
-                    else if (shape2.isSelected()) {
+                } else if (shape2.isSelected()) {
                     selectedShape = "Triangle";
-                    }
-                    else if (shape3.isSelected()) {
+                } else if (shape3.isSelected()) {
                     selectedShape = "Square";
-                   }
+                }
                 if(selectedShape.isEmpty()){
                     JOptionPane.showMessageDialog(null, "There was No Shape Selected. Please Selected The Desired Shape");
                 }
@@ -134,18 +138,15 @@ public class ControlForm extends JFrame
                     System.out.println("Speed: " + selectedSpeed);
                     System.out.println("Color: " + selectedColor);
                     System.out.println("Size: " + selectedSize);
-                
-                    //if ball observer null
-                    // create the observer
-                    //else add ball
-                    if(ball_observer == null)
-                    {
+                    
+                    if (!ballOpen){
                         ball_observer = new BallObserver();
+                        ballOpen = true;
                     }
-                   
-                        
                     ball_observer.addBall(selectedShape, selectedColor);
+                    
                 }
+                
             }
         });
         
@@ -165,4 +166,4 @@ public class ControlForm extends JFrame
         ControlForm controllerForm = new ControlForm();
     }
     
-}
+    }
