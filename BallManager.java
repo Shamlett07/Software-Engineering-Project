@@ -17,11 +17,5 @@ public class BallManager extends JFrame
         
         
     }
-    public void BallFeature()
-    {
-        
-        
-    }
-    
-    
+
 }
