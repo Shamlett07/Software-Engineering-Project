@@ -1,12 +1,12 @@
-
-import java.awt.Graphics;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
+package com.mycompany.bouncingballproject;
+
+import java.awt.Graphics;
 
 public class Triangle extends Shape 
 {
@@ -14,7 +14,12 @@ public class Triangle extends Shape
 
     public void moveShape(Graphics g)
     {
-        
+        if(x_pos < x_boundary-size && y_pos < y_boundary-size)
+        {
+            x_pos += 20;
+            y_pos += 20;
+            System.out.println("New Circle \nX: "+x_pos+"\nY: "+y_pos);
+        }
     }
     public void drawShape(Graphics g){
         int height = (int) (size * Math.sqrt(3) / 2); 
