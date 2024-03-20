@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+package com.mycompany.bouncingballproject;
+
 //import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,25 +13,23 @@ import javax.swing.*;
 
 public abstract class Shape extends JPanel
 {
-    int size_multiplier;
-    int size = 100;
-    int speed = 900;
-    int direction;
+    int x_boundary;
+    int y_boundary;
+
+    int size = 80;
+    int speed = 20;
     Color color;
     int x_pos = 50;
     int y_pos = 50;
-    int x_boundary = 700;
-    int y_boundary = 700;
+   
+    int dx = 6; 
+    int dy = 4;
+   
     
     Timer timer;
+    
     Shape(){
-        /*  We need to be able to account for 
-            the size of the shape so it doesn't appear out
-            of bounds */ 
-           
-//        Random random = new Random();
-//        x_pos = random.nextInt(500) + 50;
-//        y_pos = random.nextInt(500) + 50;
+       
     timer = new Timer (speed, new ActionListener()
         {
             @Override
@@ -52,11 +52,15 @@ public abstract class Shape extends JPanel
     
     void setSize(int new_size)
     {
-        size_multiplier = new_size;
+        size = new_size;
     }
     void setSpeed(int new_speed)
     {
-        speed = new_speed;
+        speed = 100 - new_speed;
+        
+        if (timer != null) {
+            timer.setDelay(speed); // Update the timer's delay to reflect the new speed
+        }
     }
     
     public void setColor(String new_color)

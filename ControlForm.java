@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+package com.mycompany.bouncingballproject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -143,7 +143,7 @@ public class ControlForm extends JFrame
                         ball_observer = new BallObserver();
                         ballOpen = true;
                     }
-                    ball_observer.addBall(selectedShape, selectedColor);
+                    ball_observer.addBall(selectedShape, selectedColor, selectedSize, selectedSpeed);
                     
                 }
                 

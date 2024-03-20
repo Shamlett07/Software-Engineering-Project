@@ -4,6 +4,11 @@
  * and open the template in the editor.
  */
 
+
+package com.mycompany.bouncingballproject;
+
+
+import java.awt.Insets;
 import javax.swing.*;
 public class BallObserver extends JFrame
 {
@@ -19,7 +24,7 @@ public class BallObserver extends JFrame
         this.setVisible(true);
         
     }   
-    public void addBall(String chosen_shape,String chosen_color)
+    public void addBall(String chosen_shape, String chosen_color, int chosen_size, int chosen_speed)
     {
         switch (chosen_shape) {
             case "Triangle":
@@ -33,8 +38,16 @@ public class BallObserver extends JFrame
                 break;
         }
         
+        Insets insets = getInsets();
+        bouncyBall.x_boundary = observer_width;
+        bouncyBall.y_boundary = observer_height - insets.bottom - insets.top;
+        
+        bouncyBall.setSize(chosen_size);
         bouncyBall.setColor(chosen_color);
+        bouncyBall.setSpeed(chosen_speed);
         this.add(bouncyBall);
+        this.validate();
+        this.repaint();
     }
     
 }
