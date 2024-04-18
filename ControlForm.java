@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,9 +12,10 @@ import java.awt.event.ActionListener;
 public class ControlForm extends JFrame
 {
     BallObserver ball_observer;
+    BallManager ball_manager = new BallManager();
     
-    int win_height = 500;
-    int win_width = 450;
+    int win_height = 900;
+    int win_width = 950;
     
     private JSlider speedSlider;
     private JComboBox<String> colorComboBox;
@@ -39,12 +38,17 @@ public class ControlForm extends JFrame
         this.setTitle("Control Form");
         this.setSize(win_width, win_height);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new GridLayout(5,1));
-        
+        this.setLayout(new GridLayout(6, 2));
         this.add(shapeSelection());
         this.add(speedSelection());
         this.add(colorSelection());
         this.add(sizeSelection());
+        
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(2,1));
+        
+        
+        this.add(ball_manager.getPanel());
         this.add(addBallButton());
         
         this.setVisible(true);
@@ -144,7 +148,7 @@ public class ControlForm extends JFrame
                         ballOpen = true;
                     }
                     ball_observer.addBall(selectedShape, selectedColor, selectedSize, selectedSpeed);
-                    
+                    ball_manager.addToTable(ball_observer.bouncyBall.getId(), selectedSize, selectedSpeed);
                 }
                 
             }

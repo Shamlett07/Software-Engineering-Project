@@ -4,15 +4,11 @@
  * and open the template in the editor.
  */
 
-
-package com.mycompany.bouncingballproject;
-
-
 import java.awt.Insets;
 import javax.swing.*;
 public class BallObserver extends JFrame
 {
-    Shape bouncyBall;
+    public Shape bouncyBall;
     int observer_width = 700;
     int observer_height = 700;
     

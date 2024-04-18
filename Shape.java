@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
-
 //import java.util.Random;
 import java.awt.*;
 import java.awt.event.*;
@@ -13,6 +11,7 @@ import javax.swing.*;
 
 public abstract class Shape extends JPanel
 {
+    static int id = 0;
     int x_boundary;
     int y_boundary;
 
@@ -29,8 +28,8 @@ public abstract class Shape extends JPanel
     Timer timer;
     
     Shape(){
-       
-    timer = new Timer (speed, new ActionListener()
+        id+=1;
+        timer = new Timer (speed, new ActionListener()
         {
             @Override
            public void actionPerformed(ActionEvent ae)
@@ -79,6 +78,10 @@ public abstract class Shape extends JPanel
                 color = Color.GREEN;
                 break;
         }
+        
+    }
+    public int getId(){
+        return id;
     }
     
 }
