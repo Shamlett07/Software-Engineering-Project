@@ -4,11 +4,18 @@
  * and open the template in the editor.
  */
 
+
+package com.mycompany.bouncingballproject;
+
+
 import java.awt.Insets;
 import javax.swing.*;
+import java.util.*;
+
 public class BallObserver extends JFrame
 {
-    public Shape bouncyBall;
+    ArrayList<Shape> balls = new ArrayList<>();
+    Shape bouncyBall;
     int observer_width = 700;
     int observer_height = 700;
     
@@ -41,9 +48,10 @@ public class BallObserver extends JFrame
         bouncyBall.setSize(chosen_size);
         bouncyBall.setColor(chosen_color);
         bouncyBall.setSpeed(chosen_speed);
+        
         this.add(bouncyBall);
+        balls.add(bouncyBall);
         this.validate();
-        this.repaint();
     }
     
 }
