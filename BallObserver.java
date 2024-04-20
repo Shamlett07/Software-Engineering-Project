@@ -1,57 +1,89 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-
-package com.mycompany.bouncingballproject;
-
-
-import java.awt.Insets;
+/**
+ *
+ * @author Staci Hamlett
+ */
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.util.*;
-
-public class BallObserver extends JFrame
-{
-    ArrayList<Shape> balls = new ArrayList<>();
+public class BallObserver extends JPanel {
+    BallManager ball_manager;
+    Timer timer;
+    int speed = 10;
     Shape bouncyBall;
+    JFrame observer = new JFrame();
+    
+    
     int observer_width = 700;
     int observer_height = 700;
     
-    
-    public BallObserver(){
-        this.setTitle("Observer");
-        this.setSize(observer_width, observer_height);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
-        
-    }   
-    public void addBall(String chosen_shape, String chosen_color, int chosen_size, int chosen_speed)
+    public BallObserver(BallManager ballManager)
     {
-        switch (chosen_shape) {
-            case "Triangle":
-                bouncyBall = new Triangle();
-                break;
-            case "Square":
-                bouncyBall = new Square();
-                break;
-            case "Circle":
-                bouncyBall = new Circle();
-                break;
-        }
+        observer.setTitle("Observer");
+        observer.setSize(observer_width, observer_height);
+        observer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        Insets insets = getInsets();
-        bouncyBall.x_boundary = observer_width;
-        bouncyBall.y_boundary = observer_height - insets.bottom - insets.top;
+        observer.add(this);
         
-        bouncyBall.setSize(chosen_size);
-        bouncyBall.setColor(chosen_color);
-        bouncyBall.setSpeed(chosen_speed);
+        ball_manager = ballManager;
+
+        addBallToObserver();
         
-        this.add(bouncyBall);
-        balls.add(bouncyBall);
-        this.validate();
+        timer = new Timer (speed, new ActionListener()
+        {
+            @Override
+           public void actionPerformed(ActionEvent ae)
+           {
+               for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
+                {
+                    movement(ball_manager.sub_shapes.get(dex));
+                }
+               
+               repaint();
+           } 
+        });
+        timer.start();
+        
+        observer.setVisible(true);
     }
-    
+     public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        shapeMovement(g);
+    }
+    public void shapeMovement(Graphics g){
+        for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
+        {
+            bouncyBall = ball_manager.sub_shapes.get(dex);
+            g.setColor(bouncyBall.color);
+            if(ball_manager.sub_shapes.get(dex) instanceof Circle){
+
+                g.fillOval(bouncyBall.x_pos, bouncyBall.y_pos, bouncyBall.size, bouncyBall.size);
+            }
+            else if (ball_manager.sub_shapes.get(dex) instanceof Square){
+                g.fillRect(bouncyBall.x_pos, bouncyBall.y_pos, bouncyBall.size, bouncyBall.size);
+            }
+            else{
+                g.fillPolygon(ball_manager.sub_shapes.get(dex).triangle_x_points,ball_manager.sub_shapes.get(dex).triangle_y_points , bouncyBall.num_of_points);
+            }
+        }
+    }
+    public void addBallToObserver(){
+        for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
+        {
+            bouncyBall = ball_manager.sub_shapes.get(dex);
+            
+        }
+    }
+    public void movement(Shape ball)
+    {
+        ball.moveShape();
+    }
+
 }

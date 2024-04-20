@@ -1,67 +1,39 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-//import java.util.Random;
+/**
+ *
+ * @author Staci Hamlett
+ */
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-public abstract class Shape extends JPanel
+import java.util.*;
+public abstract class Shape
 {
     static int id = 0;
-    int x_boundary;
-    int y_boundary;
-
-    int size = 80;
-    int speed = 20;
-    Color color;
-    int x_pos = 50;
-    int y_pos = 50;
-   
-    int dx = 6; 
-    int dy = 4;
-   
+    int x_boundary = 700;
+    int y_boundary = 700;
     
-    Timer timer;
-    
+    protected int size = 80;
+    protected int speed = 20;
+    protected Color color;
+    protected int x_pos;
+    protected int y_pos;
+   
+    protected int dx = 6; 
+    protected int dy = 4;
+    int[] triangle_x_points = {0,0,0};
+    int[] triangle_y_points = {0,0,0};
+    int num_of_points = 3;
+    Random ran = new Random();
     Shape(){
         id+=1;
-        timer = new Timer (speed, new ActionListener()
-        {
-            @Override
-           public void actionPerformed(ActionEvent ae)
-           {
-               repaint();
-           } 
-        });
-        timer.start();
-    }
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        g.setColor(color);
-        drawShape(g);
-        moveShape(g);
-    }
-    public abstract void drawShape(Graphics g);
-    public abstract void moveShape(Graphics g);
-    
-    void setSize(int new_size)
-    {
-        size = new_size;
-    }
-    void setSpeed(int new_speed)
-    {
-        speed = 100 - new_speed;
-        
-        if (timer != null) {
-            timer.setDelay(speed); // Update the timer's delay to reflect the new speed
-        }
+        x_pos = ran.nextInt(500);
+        y_pos = ran.nextInt(500);
     }
     
+    public abstract void moveShape();
     public void setColor(String new_color)
     {
         switch (new_color){
@@ -80,8 +52,25 @@ public abstract class Shape extends JPanel
         }
         
     }
+    public void setSize(int new_size)
+    {
+        size = new_size;
+    }
+    public void setSpeed(int new_size){
+        speed = new_size;
+    }
+    
     public int getId(){
         return id;
     }
-    
+    public Color getColor(){
+        return color;
+    }
+    public int getSize(){
+        return size;
+    }
+    public int getSpeed(){
+        return speed;
+    }
 }
+

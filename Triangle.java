@@ -1,16 +1,13 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-import java.awt.Graphics;
 
-public class Triangle extends Shape 
+public class Triangle extends Shape
 {
-    int num_of_points = 3;
     int height = (int) (size * Math.sqrt(3) / 2); 
-
+        
     // Calculate the coordinates of the vertices
     int x1 = x_pos; // Random x-coordinate for the first vertex
     int y1 = y_pos; // Random y-coordinate for the first vertex
@@ -19,13 +16,13 @@ public class Triangle extends Shape
     int x3 = x1 - size / 2; // Third vertex is to the left of the first vertex
     int y3 = y1 + height; // Y-coordinate of the third vertex
 
-    public void moveShape(Graphics g)
+    public void moveShape()
     {
         //update direction
         if (x3 + dx < 0 || x2 + dx > x_boundary) {
             dx *= -1; //go to opposite direction (horizontal)
         }
-        if (y1 + dy < 0 || y2 + dy > y_boundary) {
+        else if (y1 + dy < 0 || y2 + dy > y_boundary) {
             dy *= -1; //go to opposite direction (vertical)
         }
         
@@ -36,14 +33,16 @@ public class Triangle extends Shape
         y1 += dy;
         y2 += dy;
         y3 += dy;
+        
+        triangle_y_points[0] = y1;
+        triangle_y_points[1] = y2;
+        triangle_y_points[2] = y3;
+        
+        triangle_x_points[0] = x1;
+        triangle_x_points[1] = x2;
+        triangle_x_points[2] = x3;
+        
     }
-    public void drawShape(Graphics g){
 
-        // Define the arrays for x and y coordinates of the vertices
-        int[] triangle_x_points = {x1, x2, x3};
-        int[] triangle_y_points = {y1, y2, y3};
-        
-        g.fillPolygon(triangle_x_points, triangle_y_points, num_of_points);
-        
-    }
+
 }
