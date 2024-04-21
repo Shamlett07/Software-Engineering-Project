@@ -1,39 +1,52 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
-/**
- *
- * @author Staci Hamlett
- */
+
+package com.mycompany.bouncingballproject;
+
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 public class BallObserver extends JPanel {
     BallManager ball_manager;
     Timer timer;
     int speed = 10;
     Shape bouncyBall;
     JFrame observer = new JFrame();
-    
-    
     int observer_width = 700;
     int observer_height = 700;
     
-    public BallObserver(BallManager ballManager)
-    {
+    
+    public BallObserver(BallManager ballManager){
         observer.setTitle("Observer");
         observer.setSize(observer_width, observer_height);
         observer.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         observer.add(this);
         
         ball_manager = ballManager;
-
+       
         addBallToObserver();
+        
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int width = getWidth();
+                int height = getHeight();
+                for (Shape shape : ball_manager.sub_shapes) {
+                    shape.updateBoundaries(width, height);
+                }
+            }
+        });
         
         timer = new Timer (speed, new ActionListener()
         {
@@ -44,20 +57,22 @@ public class BallObserver extends JPanel {
                 {
                     movement(ball_manager.sub_shapes.get(dex));
                 }
-               
+
                repaint();
            } 
         });
         timer.start();
-        
+        observer.setLocationRelativeTo(null);
         observer.setVisible(true);
-    }
-     public void paintComponent(Graphics g)
+    }   
+    
+public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         shapeMovement(g);
     }
     public void shapeMovement(Graphics g){
+        
         for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
         {
             bouncyBall = ball_manager.sub_shapes.get(dex);
@@ -78,12 +93,19 @@ public class BallObserver extends JPanel {
         for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
         {
             bouncyBall = ball_manager.sub_shapes.get(dex);
-            
+            ball_manager.updateAllBoundaries(getWidth(), getHeight());
+            repaint();
+
         }
     }
     public void movement(Shape ball)
     {
         ball.moveShape();
     }
-
+    public void updateObserverDimensions() {
+        int width = getWidth();
+        int height = getHeight();
+        ball_manager.setCurrentDimensions(width, height);
+    }
+    
 }

@@ -1,30 +1,31 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package com.mycompany.bouncingballproject;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Staci Hamlett
- */
 import java.util.*;
+
 public class BallManager
 {
     Shape bouncyBall;
     ArrayList <Shape> sub_shapes = new ArrayList<>();
-    ArrayList <Shape> unsub_shapes = new ArrayList<>();
+    ArrayList <Shape> unsub_shapes = new ArrayList<>();;
     
     Object tableData[] = {0,0,0};
     
-    public void subShape(String shape, String color,int size, int speed)
+    private int currentWidth = 700; 
+    private int currentHeight = 700;
+
+    
+     public void subShape(String shape, String color,int size, int speed)
     {
-            switch (shape) {
+       switch (shape) {
             case "Triangle":
                 bouncyBall = new Triangle();
                 break;
@@ -38,11 +39,10 @@ public class BallManager
         bouncyBall.setColor(color);
         bouncyBall.setSize(size);
         bouncyBall.setSpeed(speed);
-        
+        bouncyBall.setInitialPosition(currentWidth, currentHeight);
+        bouncyBall.updateBoundaries(currentWidth, currentHeight);
         sub_shapes.add(bouncyBall);
-        
-          
-    }
+        }
 
     public Object[] addToTable()
     {
@@ -51,7 +51,7 @@ public class BallManager
             tableData[0] = sub_shapes.get(dex).getId();
             tableData[1] = sub_shapes.get(dex).getSize();
             tableData[2] = sub_shapes.get(dex).getSpeed();
-            
+
         }
         return tableData;
     }
@@ -66,27 +66,35 @@ public class BallManager
                     tableData[2] = sub_shapes.get(dex).getSpeed();
                     unsub_shapes.add(sub_shapes.get(dex));
                     sub_shapes.remove(dex);
-
                 }
             }
         }
         else
-        {
-            for(int dex = 0; dex < unsub_shapes.size(); dex++ )
-            {
-                if(unsub_shapes.get(dex).getId() == id)
-                {
-                    tableData[0] = unsub_shapes.get(dex).getId();
-                    tableData[1] = unsub_shapes.get(dex).getSize();
-                    tableData[2] = unsub_shapes.get(dex).getSpeed();
-                    sub_shapes.add(unsub_shapes.get(dex));
-                    unsub_shapes.remove(dex);
+                {       
+                    for(int i = 0; i < unsub_shapes.size(); i++ )
+                    {
+                        if(unsub_shapes.get(i).getId() == id)
+                        {
+                            tableData[0] = unsub_shapes.get(i).getId();
+                            tableData[1] = unsub_shapes.get(i).getSize();
+                            tableData[2] = unsub_shapes.get(i).getSpeed();
+                            sub_shapes.add(unsub_shapes.get(i));
+                            unsub_shapes.remove(i);
+                        }
+                    }
                 }
-            }
-        }
-        
         return tableData;
     }
+    public void setCurrentDimensions(int width, int height) {
+        this.currentWidth = width;
+        this.currentHeight = height;
+        updateAllBoundaries(width, height);
+}         
+    public void updateAllBoundaries(int width, int height) {
+        for (Shape shape : sub_shapes) {
+            shape.updateBoundaries(width, height);
+        }
+    }
 
-}
-
+}    
+   

@@ -1,21 +1,23 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
-/**
- *
- * @author Staci Hamlett
- */
-public class Circle extends Shape
-{
-        public void moveShape() {
-        
+package com.mycompany.bouncingballproject;
+
+import java.awt.*;
+
+public class Circle extends Shape {
+    
+    public void moveShape() {
+        x_pos += dx * (speed / 45);
+        y_pos += dy * (speed / 45);
         //update direction
-        if (x_pos + size + dx < 0 || x_pos + size + dx > x_boundary) {
+        if (x_pos + dx < 0 || x_pos + size + dx > x_boundary) {
             dx *= -1; //go to opposite direction (horizontal)
-        }  
-        else if (y_pos + dy < 0 || y_pos + size + dy > y_boundary) {
+        }
+        if (y_pos + dy < 0 || y_pos + size + dy > y_boundary) {
             dy *= -1; //go to opposite direction (vertical)
         }
         
@@ -23,4 +25,5 @@ public class Circle extends Shape
         x_pos += dx;
         y_pos += dy;
     }
+
 }

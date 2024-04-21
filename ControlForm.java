@@ -1,21 +1,24 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
+package com.mycompany.bouncingballproject;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.table.DefaultTableModel;
-public class ControlForm extends JFrame {
-   
+
+public class ControlForm extends JFrame
+{
     BallObserver ball_observer;
     BallManager ball_manager = new BallManager();
     
-    int win_height = 900;
-    int win_width = 950;
+    int win_height = 500;
+    int win_width = 500;
     
     private JSlider speedSlider;
     private JComboBox<String> colorComboBox;
@@ -31,14 +34,13 @@ public class ControlForm extends JFrame {
     String selectedColor;
     int selectedSize;
     JPanel manageButtons = new JPanel();
+    
     private boolean ballOpen = false;
-    
-    
     String  unsub_shapes[][];
     Object sub_shapes[] = {0 ,0 ,0};
-    
+
     String cols [] = {"Id", "Size", "Speed"};
-        
+
     private JTable subTable;
     private JTable unsubTable;
     private JScrollPane sp_sub;
@@ -59,9 +61,8 @@ public class ControlForm extends JFrame {
         
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(2,1));
-        
+
         this.add(ManagerButtons());
-        
         this.add(addBallButton());
         
         this.setVisible(true);
@@ -142,8 +143,7 @@ public class ControlForm extends JFrame {
                 } else if (shape3.isSelected()) {
                     selectedShape = "Square";
                 }
-                if(selectedShape.isEmpty())
-                {
+                if(selectedShape.isEmpty()){
                     JOptionPane.showMessageDialog(null, "There was No Shape Selected. Please Selected The Desired Shape");
                 }
                 else
@@ -153,11 +153,12 @@ public class ControlForm extends JFrame {
                     int selectedSize = sizeSlider.getValue();
                     ball_manager.subShape(selectedShape, selectedColor, selectedSize, selectedSpeed);
                     subscribeBall();
+                                        
                     if (!ballOpen){
                         ball_observer = new BallObserver(ball_manager);
                         ballOpen = true;
                     }
-                   ball_observer.addBallToObserver();
+                    ball_observer.addBallToObserver();
                 }
                 
             }
@@ -165,7 +166,7 @@ public class ControlForm extends JFrame {
         
         return addBallLabel;
     }
-        // helper method to create a panel with comment on left and selection on the right
+    
     private JPanel createLabeledPanel(String labelText, JComponent component) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
@@ -173,14 +174,15 @@ public class ControlForm extends JFrame {
         panel.add(component, BorderLayout.CENTER);
         return panel;
     }
+    
     private JPanel ManagerButtons(){
-       
+
         JPanel managerPanel = new JPanel();
         sub_model.setColumnIdentifiers(cols);
         unsub_model.setColumnIdentifiers(cols);
         subTable = new JTable(sub_model);
-        
-        
+
+
         sp_sub = new JScrollPane(subTable);
         managerPanel.setLayout(new GridLayout(1,3));
         //sub table
@@ -188,23 +190,25 @@ public class ControlForm extends JFrame {
         subPanel.setLayout(new BorderLayout());
         subPanel.add(new JLabel("Subscribed Shapes"), BorderLayout.NORTH);
         subPanel.add(sp_sub, BorderLayout.CENTER);
-        
+
         //middle
         JPanel middlePanel = new JPanel();
         middlePanel.setLayout(new GridLayout(2,1));
         JButton rightButton = new JButton(">");
         JButton leftButton = new JButton("<");
-        
+
         middlePanel.add(rightButton);
         middlePanel.add(leftButton);
-        
+
         rightButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(subTable.getSelectionModel().isSelectionEmpty() != true){
                     unsub_model.addRow(ball_manager.removeFromTable((int) subTable.getValueAt(subTable.getSelectedRow(), 1),"unsub") );
                     sub_model.removeRow(subTable.getSelectedRow());
                     
-                    
+
+                } else {
+                    JOptionPane.showMessageDialog(managerPanel,"Please select the shape you would like to move.", "No Shape Selected", JOptionPane.WARNING_MESSAGE);
                 }
                 }});
         leftButton.addActionListener(new ActionListener() {
@@ -212,13 +216,16 @@ public class ControlForm extends JFrame {
                 if(unsubTable.getSelectionModel().isSelectionEmpty() != true){
                     sub_model.addRow(ball_manager.removeFromTable((int) unsubTable.getValueAt(unsubTable.getSelectedRow(), 1), "sub"));
                     unsub_model.removeRow(unsubTable.getSelectedRow());
-                                        
+                    
+                }
+                else {
+                    JOptionPane.showMessageDialog(managerPanel,"Please select the shape you would like to move.", "No Shape Selected", JOptionPane.WARNING_MESSAGE);
                 }
                 }});
-        
+
         JPanel lastPanel = new JPanel();
         lastPanel.setLayout(new BorderLayout());
-        
+
         unsubTable = new JTable(unsub_model);
         sp_unsub = new JScrollPane(unsubTable);
         lastPanel.add(new JLabel("UnSubscribed Shapes"), BorderLayout.NORTH);
@@ -226,10 +233,10 @@ public class ControlForm extends JFrame {
         managerPanel.add(subPanel);
         managerPanel.add(middlePanel);
         managerPanel.add(lastPanel);
-        
+
         return managerPanel;
     }
-    
+
     public void subscribeBall(){
         sub_model.addRow(ball_manager.addToTable());
     }
@@ -237,5 +244,4 @@ public class ControlForm extends JFrame {
     public static void main(String[] args) {
         ControlForm controllerForm = new ControlForm();
     }
-    
-    }
+}
