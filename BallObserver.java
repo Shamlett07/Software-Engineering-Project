@@ -5,10 +5,9 @@
  */
 
 
-package com.mycompany.bouncingballproject;
 
 
-import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,7 +23,7 @@ public class BallObserver extends JPanel {
     JFrame observer = new JFrame();
     int observer_width = 700;
     int observer_height = 700;
-    
+
     
     public BallObserver(BallManager ballManager){
         observer.setTitle("Observer");
@@ -34,7 +33,7 @@ public class BallObserver extends JPanel {
         observer.add(this);
         
         ball_manager = ballManager;
-       
+
         addBallToObserver();
         
         addComponentListener(new ComponentAdapter() {
@@ -47,7 +46,6 @@ public class BallObserver extends JPanel {
                 }
             }
         });
-        
         timer = new Timer (speed, new ActionListener()
         {
             @Override
@@ -57,7 +55,6 @@ public class BallObserver extends JPanel {
                 {
                     movement(ball_manager.sub_shapes.get(dex));
                 }
-
                repaint();
            } 
         });
@@ -70,6 +67,7 @@ public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
         shapeMovement(g);
+
     }
     public void shapeMovement(Graphics g){
         
@@ -87,7 +85,7 @@ public void paintComponent(Graphics g)
             else{
                 g.fillPolygon(ball_manager.sub_shapes.get(dex).triangle_x_points,ball_manager.sub_shapes.get(dex).triangle_y_points , bouncyBall.num_of_points);
             }
-        }
+          }
     }
     public void addBallToObserver(){
         for (int dex = 0; dex < ball_manager.sub_shapes.size(); dex++)
@@ -97,7 +95,9 @@ public void paintComponent(Graphics g)
             repaint();
 
         }
+
     }
+
     public void movement(Shape ball)
     {
         ball.moveShape();

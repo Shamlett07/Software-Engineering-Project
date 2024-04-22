@@ -4,10 +4,6 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
-
-
-import java.awt.Graphics;
 
 
 public class Square extends Shape

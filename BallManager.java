@@ -4,11 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.*;
 import java.util.*;
 
 public class BallManager
@@ -21,8 +17,8 @@ public class BallManager
     
     private int currentWidth = 700; 
     private int currentHeight = 700;
-
     
+    int id_nums = 0;
      public void subShape(String shape, String color,int size, int speed)
     {
        switch (shape) {
@@ -39,9 +35,11 @@ public class BallManager
         bouncyBall.setColor(color);
         bouncyBall.setSize(size);
         bouncyBall.setSpeed(speed);
+        bouncyBall.setID(id_nums);
         bouncyBall.setInitialPosition(currentWidth, currentHeight);
         bouncyBall.updateBoundaries(currentWidth, currentHeight);
         sub_shapes.add(bouncyBall);
+        id_nums++;
         }
 
     public Object[] addToTable()
@@ -56,6 +54,7 @@ public class BallManager
         return tableData;
     }
     public Object[] removeFromTable(int id, String method){
+
         if (method.equals("unsub")){
             for(int dex = 0; dex < sub_shapes.size(); dex++ )
             {
@@ -66,6 +65,7 @@ public class BallManager
                     tableData[2] = sub_shapes.get(dex).getSpeed();
                     unsub_shapes.add(sub_shapes.get(dex));
                     sub_shapes.remove(dex);
+                   
                 }
             }
         }
@@ -84,6 +84,8 @@ public class BallManager
                     }
                 }
         return tableData;
+        
+        
     }
     public void setCurrentDimensions(int width, int height) {
         this.currentWidth = width;

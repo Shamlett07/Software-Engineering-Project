@@ -4,21 +4,21 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
+
 
 import java.awt.*;
 import java.util.*;
 public abstract class Shape
 {
-    static int id = 0;
+    private int id;
     protected int x_boundary = 700;
     protected int y_boundary = 700;
 
-    protected int size = 80;
+    protected int size = 60;
     protected int speed = 20;
     protected Color color;
-    protected int x_pos;
-    protected int y_pos;
+    protected int x_pos = 100;
+    protected int y_pos = 100;
 
     protected int dx = 6; 
     protected int dy = 4;
@@ -28,13 +28,13 @@ public abstract class Shape
     Random ran = new Random();
     
     Shape(){
-        id+=1;
-        x_pos = size + ran.nextInt(500);
-        y_pos = size+ran.nextInt(500);
+        
     }
     public void setInitialPosition(int maxWidth, int maxHeight) {
-        this.x_pos = ran.nextInt(maxWidth - size);
-        this.y_pos = ran.nextInt(maxHeight - size);
+        this.x_pos = ran.nextInt(maxWidth - size) + 1;
+        this.y_pos = ran.nextInt(maxHeight - size)+ 1;
+        System.out.println("Max Width: "+maxWidth+" Max Height: "+maxHeight);
+        System.out.println("Spawn at "+x_pos+", "+ y_pos);
     }
     
     public void updateBoundaries(int width, int height) {
@@ -75,7 +75,9 @@ public abstract class Shape
     public void setYbound(int new_ybound){
         y_boundary = new_ybound;
     }
-
+    public void setID(int new_id){
+        id = new_id;
+    }
     public int getId(){
         return id;
     }

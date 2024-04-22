@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-package com.mycompany.bouncingballproject;
 
 import javax.swing.*;
 import java.awt.*;
@@ -203,7 +202,8 @@ public class ControlForm extends JFrame
         rightButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if(subTable.getSelectionModel().isSelectionEmpty() != true){
-                    unsub_model.addRow(ball_manager.removeFromTable((int) subTable.getValueAt(subTable.getSelectedRow(), 1),"unsub") );
+                    
+                    unsub_model.addRow(ball_manager.removeFromTable((int)subTable.getValueAt(subTable.getSelectedRow(), 0),"unsub") );
                     sub_model.removeRow(subTable.getSelectedRow());
                     
 
@@ -213,10 +213,10 @@ public class ControlForm extends JFrame
                 }});
         leftButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(unsubTable.getSelectionModel().isSelectionEmpty() != true){
-                    sub_model.addRow(ball_manager.removeFromTable((int) unsubTable.getValueAt(unsubTable.getSelectedRow(), 1), "sub"));
+                if(unsubTable.getSelectionModel().isSelectionEmpty() != true)
+                {
+                    sub_model.addRow(ball_manager.removeFromTable((int) unsubTable.getValueAt(unsubTable.getSelectedRow(), 0), "sub"));
                     unsub_model.removeRow(unsubTable.getSelectedRow());
-                    
                 }
                 else {
                     JOptionPane.showMessageDialog(managerPanel,"Please select the shape you would like to move.", "No Shape Selected", JOptionPane.WARNING_MESSAGE);
