@@ -11,14 +11,14 @@ import java.util.*;
 public abstract class Shape
 {
     private int id;
-    protected int x_boundary = 700;
-    protected int y_boundary = 700;
+    protected int x_boundary;
+    protected int y_boundary;
 
-    protected int size = 60;
-    protected int speed = 20;
+    protected int size;
+    protected int speed;
     protected Color color;
-    protected int x_pos = 100;
-    protected int y_pos = 100;
+    protected int x_pos;
+    protected int y_pos;
 
     protected int dx = 6; 
     protected int dy = 4;
@@ -31,10 +31,12 @@ public abstract class Shape
         
     }
     public void setInitialPosition(int maxWidth, int maxHeight) {
-        this.x_pos = ran.nextInt(maxWidth - size) + 1;
-        this.y_pos = ran.nextInt(maxHeight - size)+ 1;
-        System.out.println("Max Width: "+maxWidth+" Max Height: "+maxHeight);
-        System.out.println("Spawn at "+x_pos+", "+ y_pos);
+        
+        maxWidth-=size*2;
+        maxHeight-=size*2;
+        this.x_pos = ran.nextInt(maxWidth - size+ 1) + size ;
+        this.y_pos = ran.nextInt(maxHeight - size+ 1) + size;
+
     }
     
     public void updateBoundaries(int width, int height) {
